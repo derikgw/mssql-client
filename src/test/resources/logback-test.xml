@@ -1,0 +1,34 @@
+<configuration>
+
+    <property name="LOG_PATH" value="./logs/test"/>
+    <property name="LOG_ARCHIVE" value="${LOG_PATH}/archive"/>
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/test.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>${LOG_ARCHIVE}/test-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- Specific logger for a test class -->
+    <logger name="com.derikwilson.mssqlclient.service.AppUserRepositoryTest" level="DEBUG" additivity="false">
+        <appender-ref ref="ROLLING"/>
+    </logger>
+
+    <!-- Specific logger for a test class -->
+    <logger name="com.derikwilson.mssqlclient.service.UserInfoServiceTest" level="DEBUG" additivity="false">
+        <appender-ref ref="ROLLING"/>
+    </logger>
+
+    <!-- Default test logger -->
+    <root level="INFO">
+        <appender-ref ref="ROLLING"/>
+    </root>
+
+</configuration>
