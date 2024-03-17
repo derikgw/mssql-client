@@ -1,64 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion> <!-- Maven POM model version (fixed value) -->
+	<modelVersion>4.0.0</modelVersion>
 
-	<!-- Parent POM configuration for inheriting from the Spring Boot Starter Parent -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.15</version> <!-- Spring Boot version -->
-		<relativePath/> <!-- Look up parent from repository instead of a relative path -->
+		<version>2.5.15</version>
+		<relativePath/>
 	</parent>
 
-	<!-- Project coordinates -->
 	<groupId>com.derikwilson</groupId>
 	<artifactId>mssql-client</artifactId>
-	<version>0.0.1-SNAPSHOT</version> <!-- Snapshot version for development -->
+	<version>1.0.0</version>
+	<name>mssql-client</name>
+	<description>An MSSQL Client</description>
 
-	<name>mssql-client</name> <!-- Human-readable project name -->
-	<description>An MSSQL Client</description> <!-- Project description -->
-
-	<!-- Project properties -->
 	<properties>
-		<java.version>11</java.version> <!-- Java version to ensure compatibility -->
-		<maven.compiler.source>11</maven.compiler.source> <!-- Source compatibility -->
-		<maven.compiler.target>11</maven.compiler.target> <!-- Target compatibility -->
+		<java.version>11</java.version>
+		<spring-boot.version>2.5.15</spring-boot.version>
+		<mssql-jdbc.version>12.6.1.jre11</mssql-jdbc.version>
+		<junit-jupiter.version>5.7.0</junit-jupiter.version>
+		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+		<maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
 	</properties>
 
-	<!-- Project dependencies -->
 	<dependencies>
-		<!-- Spring Data JPA for database interaction -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
-		<!-- Microsoft SQL Server JDBC driver for database connectivity -->
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>mssql-jdbc</artifactId>
-			<version>12.6.1.jre11</version> <!-- Ensure compatibility with Java 11 -->
+			<version>${mssql-jdbc.version}</version>
 		</dependency>
-
-		<!-- JUnit Jupiter API for unit testing -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.7.0</version>
-			<scope>test</scope> <!-- Available only for the test compilation and execution phases -->
+			<version>${junit-jupiter.version}</version>
+			<scope>test</scope>
 		</dependency>
-
-		<!-- JUnit Jupiter Engine for running JUnit 5 tests -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.7.0</version>
+			<version>${junit-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Spring Boot Starter Test for comprehensive testing facilities -->
-		<!-- Excludes JUnit 4 to ensure JUnit 5 is used -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -66,33 +54,49 @@
 			<exclusions>
 				<exclusion>
 					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId> <!-- Excludes the JUnit 4 engine -->
+					<artifactId>junit-vintage-engine</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 	</dependencies>
 
-	<!-- Build configuration -->
 	<build>
 		<plugins>
-			<!-- Spring Boot Maven Plugin for packaging and running the application -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
-			<!-- Maven Surefire Plugin for running unit tests -->
-			<!-- Configures the test file naming patterns and sets the active Spring profile to 'local' -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
+				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
 					<includes>
 						<include>**/*Tests.java</include>
 						<include>**/*Test.java</include>
 					</includes>
 					<argLine>-Dspring.profiles.active=local</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>generate-javadocs</id>
+						<phase>package</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>${java.version}</source>
+					<charset>UTF-8</charset>
+					<docEncoding>UTF-8</docEncoding>
+					<outputDirectory>${project.build.directory}/javadoc</outputDirectory>
+					<failOnError>false</failOnError>
 				</configuration>
 			</plugin>
 		</plugins>
