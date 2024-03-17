@@ -2,6 +2,12 @@
 
 Welcome to the MSSQL Client Application, a Spring Boot-based project designed for interacting with Microsoft SQL Server databases. This guide aims to assist developers in understanding, setting up, and contributing to this project.
 
+## Please Read First
+
+This application serves as an example project to demonstrate the use of Spring Framework, Spring Data JPA, and HikariCP for building a robust Java application that interacts with Microsoft SQL Server. It is intended to be used as a reference or starting point for developers familiarizing themselves with these technologies.
+
+While this application is fully functional, it is important to note that it is primarily educational and should be used as a guide for best practices and integration patterns.
+
 ## Important Notice
 
 During the initial project setup, it was found that the intended package name 'com.derikwilson.mssql-client' is not a valid identifier in Java. As such, the project uses 'com.derikwilson.mssqlclient' as its package name.
