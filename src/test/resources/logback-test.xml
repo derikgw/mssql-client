@@ -21,11 +21,6 @@
         <appender-ref ref="ROLLING"/>
     </logger>
 
-    <!-- Specific logger for a test class -->
-    <logger name="com.derikwilson.mssqlclient.service.UserInfoServiceTest" level="DEBUG" additivity="false">
-        <appender-ref ref="ROLLING"/>
-    </logger>
-
     <!-- Default test logger -->
     <root level="INFO">
         <appender-ref ref="ROLLING"/>

@@ -23,13 +23,14 @@ public class UserInfoService {
         return userInfoRepository.findAll();
     }
 
-    public List<UserInfo> findUserInfoByGuid(UUID userGuid) {
-        return userInfoRepository.findByUserGuid(userGuid);
+    public UserInfo findUserInfoByGuid(UUID userGuid) {
+        return userInfoRepository.getById(userGuid);
     }
 
-    @Transactional
-    public UserInfo saveOrUpdateUserInfo(UserInfo userInfo) {
+    public UserInfo saveUserInfo(UserInfo userInfo) {
+
         return userInfoRepository.save(userInfo);
+
     }
 
     // More methods as needed
