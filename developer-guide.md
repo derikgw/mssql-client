@@ -12,6 +12,9 @@ While this application is fully functional, it is important to note that it is p
 
 During the initial project setup, it was found that the intended package name 'com.derikwilson.mssql-client' is not a valid identifier in Java. As such, the project uses 'com.derikwilson.mssqlclient' as its package name.
 
+## Documentation
+For detailed API information, check out the [Project Javadocs](https://derikgw.github.io/mssql-client/apidocs/index.html).
+
 ## Getting Started
 
 This section provides a brief overview of how to get the project up and running on your local development machine.
