@@ -35,9 +35,52 @@ This section provides a brief overview of how to get the project up and running 
    mvn spring-boot:run
    ```
 
-### Configuration
+### Database Configuration
 
-The application requires configuration of database connection properties in `src/main/resources/application.properties` or through environment variables. Please refer to the included `application-local.properties.example` file for guidance on setting up your database connection.
+Before running the application, you need to set up the database schema and tables. Execute the following SQL script against your SQL Server instance to create the `TEST_APP` schema along with `APP_USERS` and `USER_INFO` tables:
+
+```sql
+USE TESTDB;
+GO
+
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'TEST_APP')
+BEGIN
+    EXEC ('CREATE SCHEMA TEST_APP');
+END;
+GO
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TEST_APP' AND TABLE_NAME = 'APP_USERS')
+BEGIN
+    DROP TABLE TEST_APP.APP_USERS;
+END;
+GO
+
+CREATE TABLE TEST_APP.APP_USERS (
+    USER_GUID uniqueidentifier NOT NULL,
+    USER_ID bigint NOT NULL,
+    LAST_UPDATE datetime NULL,
+    ACTIVE int NULL,
+    CONSTRAINT PK_APP_USERS PRIMARY KEY (USER_GUID)
+);
+GO
+
+IF EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'TEST_APP' AND TABLE_NAME = 'USER_INFO')
+BEGIN
+    DROP TABLE TEST_APP.USER_INFO;
+END;
+GO
+
+CREATE TABLE TEST_APP.USER_INFO (
+    INFO_ID int NOT NULL IDENTITY(1,1),
+    USER_GUID uniqueidentifier NOT NULL,
+    EMAIL nchar(255) NOT NULL,
+    CONSTRAINT PK_USER_INFO PRIMARY KEY (INFO_ID),
+    CONSTRAINT FK_USER_INFO_APP_USERS FOREIGN KEY (USER_GUID) REFERENCES TEST_APP.APP_USERS (USER_GUID)
+);
+GO
+```
+
+Adjust the database connection properties in <b>'src/main/resources/application.properties'</b> based on your local setup or set the environment variables accordingly.
 
 ## Reference Documentation
 
