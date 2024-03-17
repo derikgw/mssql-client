@@ -23,6 +23,9 @@
 		<junit-jupiter.version>5.7.0</junit-jupiter.version>
 		<maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
 		<maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+
+		<api.documentation.dir>${project.basedir}/docs/apidocs</api.documentation.dir>
+
 	</properties>
 
 	<dependencies>
@@ -89,16 +92,44 @@
 						<goals>
 							<goal>javadoc</goal>
 						</goals>
+						<configuration>
+							<!-- Configuring output directory for javadoc:javadoc -->
+							<outputDirectory>${project.basedir}/docs</outputDirectory>
+						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version> <!-- Use the latest version -->
 				<configuration>
-					<source>${java.version}</source>
-					<charset>UTF-8</charset>
-					<docEncoding>UTF-8</docEncoding>
-					<outputDirectory>${project.build.directory}/javadoc</outputDirectory>
-					<failOnError>false</failOnError>
+					<filesets>
+						<fileset>
+							<directory>${api.documentation.dir}</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
+	<reporting>
+		<outputDirectory>${project.basedir}/docs</outputDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<destDir>${project.basedir}/docs</destDir>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
