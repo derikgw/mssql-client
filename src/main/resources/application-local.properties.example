@@ -1,0 +1,19 @@
+# Database Configuration
+spring.datasource.jdbc-url=jdbc:sqlserver://localhost:1433;instanceName=SQLEXPRESS;databaseName=TESTDB;encrypt=false;trustServerCertificate=true
+spring.datasource.url=jdbc:sqlserver://localhost:1433;instanceName=SQLEXPRESS;databaseName=TESTDB;encrypt=false;trustServerCertificate=true
+spring.datasource.username=derikCrud
+spring.datasource.password=mypassword
+spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+# JPA/Hibernate Configuration
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServer2012Dialect
+
+# It's also a good practice to specify the HikariCP settings for your connection pool
+spring.datasource.hikari.maximum-pool-size=5
+spring.datasource.hikari.minimum-idle=5
+spring.datasource.hikari.connection-timeout=30000
+spring.datasource.hikari.idle-timeout=300000
+spring.datasource.hikari.max-lifetime=1800000
+
