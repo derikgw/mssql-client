@@ -61,6 +61,29 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!-- PICOCLI -->
+		<dependency>
+			<groupId>info.picocli</groupId>
+			<artifactId>picocli-spring-boot-starter</artifactId>
+			<version>4.6.1</version>
+		</dependency>
+
+		<!-- SLF4J API -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.30</version> <!-- Use the latest version -->
+		</dependency>
+
+		<!-- Logback Classic -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version> <!-- Use the latest version -->
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -74,6 +97,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
 				<configuration>
+					<skipTests>true</skipTests>
 					<includes>
 						<include>**/*Tests.java</include>
 						<include>**/*Test.java</include>

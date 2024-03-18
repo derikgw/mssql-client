@@ -1,3 +1,4 @@
 com.derikwilson.mssqlclient
+com.derikwilson.mssqlclient.cli
 com.derikwilson.mssqlclient.db
 com.derikwilson.mssqlclient.service

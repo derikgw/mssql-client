@@ -2,11 +2,15 @@ package com.derikwilson.mssqlclient.service;
 
 import com.derikwilson.mssqlclient.db.UserInfo;
 import com.derikwilson.mssqlclient.db.UserInfoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -17,6 +21,8 @@ import java.util.UUID;
  */
 @Service
 public class UserInfoService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserInfoService.class);
 
     private final UserInfoRepository userInfoRepository;
 
@@ -47,7 +53,13 @@ public class UserInfoService {
      * @throws javax.persistence.EntityNotFoundException if no entity exists for the provided UUID.
      */
     public UserInfo findUserInfoByGuid(UUID userGuid) {
-        return userInfoRepository.getById(userGuid);
+        Optional<UserInfo> userInfoOptional = userInfoRepository.findById(userGuid);
+        if (userInfoOptional.isPresent()) {
+            return userInfoOptional.get();
+        } else {
+            log.error("User information not found for GUID: {}", userGuid);
+            throw new EntityNotFoundException("User information not found for GUID: " + userGuid);
+        }
     }
 
     /**
@@ -57,7 +69,9 @@ public class UserInfoService {
      * @param userInfo The {@link UserInfo} entity to be saved or updated.
      * @return The saved or updated {@link UserInfo} entity.
      */
+    @Transactional
     public UserInfo saveUserInfo(UserInfo userInfo) {
+        // Perhaps add validation logic here
         return userInfoRepository.save(userInfo);
     }
 }

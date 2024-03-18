@@ -46,6 +46,11 @@ public class AppUserServiceTest { // Renaming to reflect we're testing the servi
         UserInfo newUserInfo = new UserInfo();
         newUserInfo.setUserGuid(newUser.getUserGuid());
         newUserInfo.setEmail("userguy@example.com");
+
+        newUserInfo.setFirstName("Rick"); // Make sure this is not null
+        newUserInfo.setLastName("James");
+        newUserInfo.setEmail("rj@example.com");
+
         userInfoService.saveUserInfo(newUserInfo); // Assuming direct use for non-service covered actions
 
         // Assertion to check if AppUser was saved correctly
@@ -64,13 +69,18 @@ public class AppUserServiceTest { // Renaming to reflect we're testing the servi
         newUserInfo = new UserInfo(); // Resetting newUserInfo object
         newUserInfo.setUserGuid(newUser.getUserGuid());
         newUserInfo.setEmail("userguy2@example.com");
+
+        newUserInfo.setFirstName("Francis"); // Make sure this is not null
+        newUserInfo.setLastName("Gigglesworth");
+        newUserInfo.setEmail("frannyg@example.com");
+
         userInfoService.saveUserInfo(newUserInfo);
 
         // Assertions to check UserInfo saving logic
         assertThat(newUserInfo).isNotNull();
         UUID userInfoGUID = newUserInfo.getUserGuid();
         assertThat(userInfoGUID).isNotNull();
-        assertThat(newUserInfo.getEmail()).isEqualTo("userguy2@example.com");
+        assertThat(newUserInfo.getEmail()).isEqualTo("frannyg@example.com");
 
         // Utilizing service to retrieve all users and assert
         List<AppUser> users = appUserService.getAllAppUsers();

@@ -21,13 +21,86 @@ public class UserInfo {
     private UUID userGuid;
 
     /**
+     * The {@code firstName} field stores the user's first name. It is mapped to a column
+     * in a database using the {@link javax.persistence.Column} annotation.
+     */
+    @Column
+    private String firstName;
+
+    /**
+     * The {@code lastName} field stores the user's last name. Similar to {@code firstName},
+     * it is mapped to a column in a database.
+     */
+    @Column
+    private String lastName;
+
+    /**
+     * The {@code middleInit} field represents the user's middle initial. This is also
+     * mapped to a column in a database.
+     */
+    @Column
+    private char middleInit;
+
+    /**
+     * Retrieves the first name of the user.
+     *
+     * @return A {@link String} representing the user's first name.
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     * Sets the user's first name.
+     *
+     * @param firstName A {@link String} containing the user's first name.
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     * Retrieves the last name of the user.
+     *
+     * @return A {@link String} representing the user's last name.
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     * Sets the user's last name.
+     *
+     * @param lastName A {@link String} containing the user's last name.
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     * Retrieves the middle initial of the user.
+     *
+     * @return A {@code char} representing the user's middle initial.
+     */
+    public char getMiddleInit() {
+        return middleInit;
+    }
+
+    /**
+     * Sets the user's middle initial.
+     *
+     * @param middleInit A {@code char} representing the user's new middle initial.
+     */
+    public void setMiddleInit(char middleInit) {
+        this.middleInit = middleInit;
+    }
+
+    /**
      * The email address of the user. This field is required and has a maximum length of 255 characters.
      * It is stored in the EMAIL column of the USER_INFO table.
      */
     @Column(name = "EMAIL", nullable = false, length = 255)
     private String email;
-
-    // Constructors, Getters, and Setters
 
     /**
      * Gets the unique identifier (UUID) of the user.

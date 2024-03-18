@@ -1,0 +1,42 @@
+<configuration>
+
+    <!-- Configuration properties -->
+    <!-- LOG_PATH: Defines the directory path where log files are stored. -->
+    <property name="LOG_PATH" value="./logs/app"/>
+    <!-- LOG_ARCHIVE: Specifies the directory path for archived log files, using the LOG_PATH value. -->
+    <property name="LOG_ARCHIVE" value="${LOG_PATH}/archive"/>
+
+    <!-- Appender configuration -->
+    <!-- ROLLING: A rolling file appender configuration that supports log rotation. -->
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- file: The current log file to which log entries are written. Specifies the file path using the LOG_PATH property. -->
+        <file>${LOG_PATH}/test.log</file>
+
+        <!-- encoder: Defines the format of the log message. -->
+        <encoder>
+            <!-- pattern: The log message format, including a timestamp and the log message. -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+
+        <!-- rollingPolicy: Configuration for log rotation based on time. -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- fileNamePattern: Pattern for archived log files, including a daily timestamp. Log files are compressed as .zip. -->
+            <fileNamePattern>${LOG_ARCHIVE}/test-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+            <!-- maxHistory: The maximum number of days to keep the archived log files. Older files are deleted. -->
+            <maxHistory>30</maxHistory>
+            <!-- totalSizeCap: The maximum total size of all log archives. Older archives are deleted if this size is exceeded. -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.springframework" level="DEBUG"/>
+    <logger name="com.derikwilson.mssqlclient" level="DEBUG"/>
+
+    <!-- Default logger configuration -->
+    <!-- root: The root logger configuration applies to all logging. Set to INFO level by default. -->
+    <root level="INFO">
+        <!-- appender-ref: Associates the root logger with the ROLLING appender for log output. -->
+        <appender-ref ref="ROLLING"/>
+    </root>
+
+</configuration>
